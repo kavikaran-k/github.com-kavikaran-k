@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kavikaran K — Software &amp; Data Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDF0E6;
+    --paper-line:#D8DECF;
+    --ink:#1B2A2F;
+    --ink-soft:#4B5C58;
+    --moss:#4E6E52;
+    --moss-deep:#31473A;
+    --amber:#C1792F;
+    --card:#F6F7F1;
+    --rule:#B9C2AE;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, var(--paper-line) 39px, var(--paper-line) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, var(--paper-line) 39px, var(--paper-line) 40px),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+
+  header.hero{padding:64px 0 40px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--moss-deep);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:8px; height:8px; border-radius:50%;
+    background:var(--moss); display:inline-block;
+    box-shadow:0 0 0 3px rgba(78,110,82,0.18);
+  }
+  h1.name{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(40px, 8vw, 68px);
+    line-height:1.02;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  h1.name a{text-decoration:none; border-bottom:3px solid transparent; transition:border-color .2s;}
+  h1.name a:hover{border-color:var(--moss);}
+  .role{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:500;
+    font-size:clamp(16px, 2.6vw, 20px);
+    color:var(--moss-deep);
+    margin-top:10px;
+  }
+  .thesis{
+    max-width:620px;
+    margin-top:22px;
+    font-size:17px;
+    color:var(--ink-soft);
+  }
+
+  .contact-row{
+    margin-top:30px;
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:.02em;
+    padding:9px 14px;
+    border:1px solid var(--rule);
+    border-radius:3px;
+    text-decoration:none;
+    color:var(--ink);
+    background:var(--card);
+    display:inline-flex; align-items:center; gap:7px;
+    transition:background .18s, border-color .18s, transform .12s;
+  }
+  .chip:hover{background:var(--moss); border-color:var(--moss); color:var(--paper); transform:translateY(-1px);}
+
+  /* Readout panel */
+  .readout{
+    margin-top:44px;
+    border:1px solid var(--rule);
+    background:var(--card);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .readout-head{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--paper);
+    background:var(--moss-deep);
+    padding:8px 16px;
+  }
+  .readout-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+  }
+  .readout-cell{
+    padding:16px 18px;
+    border-right:1px solid var(--rule);
+    border-top:1px solid var(--rule);
+  }
+  .readout-cell:nth-child(-n+4){border-top:none;}
+  .readout-cell:last-child, .readout-grid .readout-cell:nth-child(4n){border-right:none;}
+  .readout-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .readout-value{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:22px;
+    color:var(--ink);
+  }
+
+  /* Section scaffolding */
+  section{padding:52px 0;}
+  .section-head{
+    display:flex; align-items:baseline; gap:14px;
+    margin-bottom:28px;
+  }
+  .section-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; color:var(--amber);
+  }
+  .section-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:26px;
+    color:var(--ink);
+  }
+  .section-title::after{
+    content:"";
+    display:block;
+    width:100%; height:1px;
+    background:var(--rule);
+    margin-top:14px;
+  }
+  .section-head{flex-direction:column; align-items:flex-start; gap:0;}
+
+  /* About */
+  .about-text{max-width:640px; font-size:16.5px; color:var(--ink-soft);}
+
+  /* Skills */
+  .skill-groups{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:22px;}
+  .skill-group-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--moss-deep); margin-bottom:10px;
+  }
+  .tag-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    padding:6px 11px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    color:var(--ink);
+  }
+
+  /* Projects */
+  .project{
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:26px 28px;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .project + .project{margin-top:20px;}
+  .project-top{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    flex-wrap:wrap; gap:10px; margin-bottom:6px;
+  }
+  .project-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:19px; color:var(--ink);
+  }
+  .project-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; color:var(--moss-deep);
+    border:1px solid var(--moss); border-radius:20px;
+    padding:3px 11px;
+    white-space:nowrap;
+  }
+  .project-org{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; color:var(--ink-soft); margin-bottom:14px;
+  }
+  .project ul{padding-left:20px; color:var(--ink-soft); font-size:15.5px;}
+  .project li{margin-bottom:6px;}
+  .project li::marker{color:var(--amber);}
+
+  /* Log / education */
+  .log{border-left:2px solid var(--rule); margin-left:6px;}
+  .log-entry{
+    position:relative;
+    padding:0 0 30px 28px;
+  }
+  .log-entry:last-child{padding-bottom:0;}
+  .log-entry::before{
+    content:"";
+    position:absolute; left:-7px; top:4px;
+    width:12px; height:12px; border-radius:50%;
+    background:var(--paper); border:2px solid var(--moss);
+  }
+  .log-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; color:var(--amber); letter-spacing:.05em;
+  }
+  .log-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:17px; margin-top:4px;
+  }
+  .log-detail{color:var(--ink-soft); font-size:15px; margin-top:3px;}
+
+  /* Achievements */
+  .achieve-list{display:grid; gap:12px;}
+  .achieve-item{
+    display:flex; gap:14px; align-items:flex-start;
+    font-size:15.5px; color:var(--ink-soft);
+  }
+  .achieve-mark{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--amber); font-size:13px; margin-top:3px;
+  }
+
+  footer{
+    padding:50px 0 70px;
+    border-top:1px solid var(--rule);
+    margin-top:20px;
+  }
+  .footer-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:24px; margin-bottom:14px;
+  }
+  .footer-links{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+  .foot-note{
+    margin-top:36px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; color:var(--ink-soft);
+  }
+
+  @media (max-width:600px){
+    .readout-cell{border-right:none !important;}
+    .project-top{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Chennai / Perambalur, Tamil Nadu — Final-Year B.Tech</div>
+    <h1 class="name"><a href="#top" id="top">Kavikaran K</a></h1>
+    <div class="role">Software &amp; Data Engineering — Entry Level</div>
+    <p class="thesis">I build small, working things out of messy data and basic hardware — a sustainability
+      dashboard from raw campus audit numbers, an air-quality sensor rig from Arduino and a weekend deadline.
+      Comfortable with Java, Python and SQL; most at home turning a spreadsheet into a decision.</p>
+
+    <div class="contact-row">
+      <a class="chip" href="mailto:kavikaranpec@gmail.com">✉ kavikaranpec@gmail.com</a>
+      <a class="chip" href="tel:+919787291965">☎ +91 97872 91965</a>
+      <a class="chip" href="https://www.linkedin.com/in/kavikaran-k-2a212b314/" target="_blank" rel="noopener">in/ LinkedIn</a>
+      <a class="chip" href="https://github.com/kavikaran-k" target="_blank" rel="noopener">⌥ GitHub</a>
+    </div>
+
+    <div class="readout">
+      <div class="readout-head">// candidate_readout.log</div>
+      <div class="readout-grid">
+        <div class="readout-cell"><div class="readout-label">CGPA</div><div class="readout-value">8.94 / 10</div></div>
+        <div class="readout-cell"><div class="readout-label">Hackathon</div><div class="readout-value">2nd Overall</div></div>
+        <div class="readout-cell"><div class="readout-label">IEEE Xtreme</div><div class="readout-value">Rank 7</div></div>
+        <div class="readout-cell"><div class="readout-label">Grad Year</div><div class="readout-value">2027</div></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div class="section-title">About</div>
+    </div>
+    <p class="about-text">Final-year B.Tech student at Panimalar Engineering College. My strongest work so far
+      sits at the overlap of data and hardware — reading raw sustainability data into a usable dashboard during
+      an internship with 1M1B Green Skills Academy, and wiring sensors to Arduino for an air-pollution monitor
+      that placed 2nd overall at a college hackathon. I'm looking for an entry-level software or IT services
+      role where I can keep building things that turn raw input into something a team can act on.</p>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div class="section-title">Technical Skills</div>
+    </div>
+    <div class="skill-groups">
+      <div>
+        <div class="skill-group-label">Languages</div>
+        <div class="tag-row"><span class="tag">Java</span><span class="tag">Python</span></div>
+      </div>
+      <div>
+        <div class="skill-group-label">Web Fundamentals</div>
+        <div class="tag-row"><span class="tag">HTML</span><span class="tag">CSS</span></div>
+      </div>
+      <div>
+        <div class="skill-group-label">Data &amp; Databases</div>
+        <div class="tag-row"><span class="tag">SQL</span><span class="tag">Excel</span><span class="tag">Tableau</span><span class="tag">Power BI</span></div>
+      </div>
+      <div>
+        <div class="skill-group-label">Working Style</div>
+        <div class="tag-row"><span class="tag">Data Analysis</span><span class="tag">Attention to Detail</span><span class="tag">Team Collaboration</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div class="section-title">Projects &amp; Internship</div>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <div class="project-title">Green Campus Sustainability Dashboard</div>
+        <div class="project-tag">Internship</div>
+      </div>
+      <div class="project-org">1M1B Green Skills Academy — in partnership with AICTE &amp; Salesforce</div>
+      <ul>
+        <li>Collaborated within a 4-member intern team to review and validate sustainability reports across assigned focus areas.</li>
+        <li>Analyzed data from multiple sources and consolidated findings into an interactive Tableau dashboard.</li>
+        <li>Produced a Campus Green Audit Report for Panimalar Engineering College to support ongoing sustainability tracking.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <div class="project-title">IoT-Based Air Pollution Monitoring System</div>
+        <div class="project-tag">Hackathon · 2nd Prize</div>
+      </div>
+      <div class="project-org">Prathyusha Engineering College</div>
+      <ul>
+        <li>Designed an IoT-based air pollution monitoring system to help industries detect and reduce pollution levels.</li>
+        <li>Integrated sensors with Arduino for real-time environmental data collection and analysis.</li>
+        <li>Built and presented the solution end-to-end as a team, placing 2nd Prize Overall.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div class="section-title">Education</div>
+    </div>
+    <div class="log">
+      <div class="log-entry">
+        <div class="log-date">2023 — PRESENT</div>
+        <div class="log-title">Bachelor of Technology — Panimalar Engineering College, Chennai</div>
+        <div class="log-detail">Cumulative GPA: 8.94 / 10</div>
+      </div>
+      <div class="log-entry">
+        <div class="log-date">2022 — 2023</div>
+        <div class="log-title">HSC — St. Joseph's Matriculation Hr. Sec. School, Perambalur</div>
+        <div class="log-detail">Percentage: 88%</div>
+      </div>
+      <div class="log-entry">
+        <div class="log-date">2020 — 2021</div>
+        <div class="log-title">SSLC — St. Joseph's Matriculation Hr. Sec. School, Perambalur</div>
+        <div class="log-detail">Percentage: 100%</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div class="section-title">Certifications &amp; Achievements</div>
+    </div>
+    <div class="achieve-list">
+      <div class="achieve-item"><span class="achieve-mark">▸</span> Full Stack Web Development &amp; Java Core Fundamentals — Test Yantra Software Solutions (in partnership with AICTE)</div>
+      <div class="achieve-item"><span class="achieve-mark">▸</span> Certified Courses — Infosys Springboard, Oracle, NASSCOM, and NPTEL</div>
+      <div class="achieve-item"><span class="achieve-mark">▸</span> 2nd Prize Overall — Hackathon, Prathyusha Engineering College (IoT-based air pollution monitoring system)</div>
+      <div class="achieve-item"><span class="achieve-mark">▸</span> IEEE Xtreme — Overall 7th Rank in problem-solving coding competition</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-title">Let's talk.</div>
+    <p class="about-text">Open to entry-level Software Development and IT Services roles — available to start immediately after graduation.</p>
+    <div class="footer-links">
+      <a class="chip" href="mailto:kavikaranpec@gmail.com">✉ Email</a>
+      <a class="chip" href="tel:+919787291965">☎ Call</a>
+      <a class="chip" href="https://www.linkedin.com/in/kavikaran-k-2a212b314/" target="_blank" rel="noopener">in/ LinkedIn</a>
+      <a class="chip" href="https://github.com/kavikaran-k" target="_blank" rel="noopener">⌥ GitHub</a>
+    </div>
+    <div class="foot-note">Perambalur, Tamil Nadu, India</div>
+  </footer>
+</div>
+
+</body>
+</html>
